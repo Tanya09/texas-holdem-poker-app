@@ -10,7 +10,7 @@ This program is designed to allow users to input community cards and hole cards 
     1. Install Node.js and npm. https://nodejs.org/en
     2. Install Angular CLI: `npm install -g @angular/cli` (run in cmd)
 2. Clone the repository
-    1. `git clone [URL]`
+    1. `git clone https://github.com/Tanya09/texas-holdem-poker-app.git` - Branch v1.0
 3. Install Dependencies
     1. `npm i`
 4. Run the application
