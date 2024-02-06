@@ -1,0 +1,54 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .table {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  .player-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+  }
+  .button-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    width: 28rem;
+  }
+  
+  .button {
+    width: 60%; 
+    height: 3rem; 
+    font-size: 1rem; 
+    cursor: pointer;
+    border: none;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+    margin: 0rem 1rem;
+  }
+  
+  .exit-button {
+    background-color: #e74c3c; 
+    color: #fff;
+  }
+  
+  .calculate-button {
+    background-color: #2ecc71;
+    color: #fff;
+  }
+  
+  .modify-button {
+    background-color: #3498db; 
+    color: #fff;
+  }
+  
+  .button:hover {
+    background-color: #555; 
+  }
+  

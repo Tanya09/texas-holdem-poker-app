@@ -1,0 +1,49 @@
+<div class="modal-container">
+  <!--section for letting the user enter the community cards by selecting the dropdown-->
+    <div class="community-cards">
+      <span class="title">Community Cards</span>
+      <div class="card-inputs" *ngFor="let i of [1, 2, 3, 4, 5]">
+        <div [formGroup]="$any(communityCardsForm.get('card' + i))">
+          <select formControlName="value" class="dropdown">
+            <option *ngFor="let cardValue of cardValues" [value]="cardValue">{{cardValue}}</option>
+          </select>
+          <select formControlName="suit" class="dropdown">
+            <option *ngFor="let suitValue of suits" [value]="suitValue">{{suitValue}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!--section for letting the user enter the player cards by clicking 'Add Player' and filling the form-->
+
+    <div class="add-player-section">
+      <div [formGroup]="playerCardsForm">
+
+      <div formArrayName="player">
+        <div *ngFor="let player of $any(playerCardsForm?.get('player')).controls; let i = index" [formGroup]="player" class="player-row">
+          <input formControlName="name" placeholder="Name" class="player-name">
+          <div *ngFor="let card of ['card1', 'card2']" class="card-inputs">
+            <div [formGroup]="player.get(card)">
+              <select formControlName="value" class="dropdown">
+                <option *ngFor="let cardValue of cardValues" [value]="cardValue">{{cardValue}}</option>
+              </select>
+              <select formControlName="suit" class="dropdown">
+                <option *ngFor="let suitValue of suits" [value]="suitValue">{{suitValue}}</option>
+              </select>
+            </div>
+          </div>
+          <i (click)="removePlayer(i)"  class="fa fa-remove remove-player-icon " ></i>
+
+        </div>
+      </div>
+      </div>
+
+    </div>
+    <button (click)="addPlayer()" class="add-player-button">Add Player</button>
+
+    <div class="actions">
+      <button (click)="onSave()" class="save-button">Save</button>
+      <button (click)="dialogRef.close()" class="close-button">Close</button>
+    </div>
+  </div>
+  

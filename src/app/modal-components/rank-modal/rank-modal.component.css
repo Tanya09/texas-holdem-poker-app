@@ -1,0 +1,46 @@
+.rankings-container {
+  text-align: center;
+  padding: 1rem;
+}
+
+h2,.hand-tag {
+  color: #3498db;
+}
+
+.table-container{
+  height: 25rem;
+}
+
+.player-table {
+  margin-top: 3rem;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.player-table th,
+.player-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.player-table th {
+  background-color: #f2f2f2;
+}
+
+.player-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.player-table tr:hover {
+  background-color: #ddd;
+}
+
+.close-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}

@@ -1,0 +1,11 @@
+<div class="table-container">
+  <!-- <img class="board-img-placeholder" [src]="'assets/community-board.jpg'" alt=" board"> -->
+  <div class="table-header">
+    <div class="heading">Community Table</div>
+  </div>
+  <div class="card-row">
+    <div class="card-placeholder" *ngFor="let card of communityCards">
+      <img class="card-img-placeholder" [src]="'assets/cards/'+card+'.svg'" alt="{{ card }}">   
+    </div>
+  </div>
+</div>

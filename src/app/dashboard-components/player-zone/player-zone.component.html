@@ -1,0 +1,19 @@
+
+
+  <div class="player-zone">
+    <h2>Player Zone</h2>
+    <div class="player-cards">
+      <div class="player-card" *ngFor="let player of players">
+        <div class="player-name">{{ player.name }}</div>
+        <div class="player-hand">
+          <!-- Displaying the player cards here -->
+          <div class="card">
+            <img class="img-placeholder" [src]="'assets/cards/'+player.cards[0]+'.svg'" alt="{{ player.cards[0] }}">   
+          </div>
+          <div class="card">
+            <img class="img-placeholder" [src]="'assets/cards/'+player.cards[1]+'.svg'" alt="{{ player.cards[1] }}">   
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

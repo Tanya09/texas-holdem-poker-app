@@ -1,0 +1,25 @@
+<div class="rankings-container">
+  <h2>Rankings</h2>
+  <div class="table-container">
+    <table class="player-table">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Winning Cards</th>
+          <th>Hand Tag</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of rankedPlayers; let i = index">
+          <td>{{ player.actualRank }}</td>
+          <td>{{ player.name }}</td>
+          <td>{{ player.winningCards.join(', ') }}</td>
+          <td class = "hand-tag">{{ player.handTag }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <button class="close-button" (click)="onClose()">Close</button>
+</div>

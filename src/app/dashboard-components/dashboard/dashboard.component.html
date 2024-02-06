@@ -1,0 +1,12 @@
+<app-community-table [communityCards]="communityCards"></app-community-table>
+<div>
+    <app-player-zone [players]="players"></app-player-zone>
+</div>
+
+
+<div class="button-row">
+    <button class="button exit-button" (click)="exit()">Exit</button>
+    <button  class="button calculate-button" (click)="openRankModal()">Calculate</button>
+    <button  class="button modify-button" (click)="openModifyInputModal()">Add/Modify Input</button>
+    
+</div>
