@@ -60,8 +60,8 @@ export class ModifyInputModalContentComponent implements OnInit {
   
   private createCardFormGroup(cardData?: string): FormGroup {
     return this.fb.group({
-      value: [cardData ? cardData.substring(0, 1) : '', Validators.required],
-      suit: [cardData ? cardData.substring(1) : '', Validators.required]
+      value: [cardData ? cardData.slice(0, -1) : '', Validators.required],
+      suit: [cardData ? cardData.slice(-1) : '', Validators.required]
     });
   }
   
