@@ -74,19 +74,45 @@ export class PokerService {
     let currentRank = 1; // Start with rank 1
     let prevRank = null;
     let prevHandTagLength = null;
-
-    for (let i = 0; i < rankedPlayers.length; i++) {
+    outerLoopBreak: for (let i = 0; i < rankedPlayers.length; i++) {
       const currentPlayer = rankedPlayers[i];
-
+      const prevPlayer = rankedPlayers[i - 1];
+      let hasSameRank = true;
       // Check if current player's rank or hand tag length is different from the previous player
       if (prevRank === null || currentPlayer.rank !== prevRank || currentPlayer.handTag.length !== prevHandTagLength) {
         currentPlayer.actualRank = currentRank;
         // Increment current rank only when changing conditions are met
         currentRank++;
       } else {
-        currentPlayer.actualRank = currentRank - 1;
-      }
+        for (let j = 0; j < 5; j++) {
+          let indexA, indexB;
+          if (currentPlayer.rank === 2 || currentPlayer.rank === 6) {
+            const sortedValues = currentPlayer.winningCards.map((card: string) => this.cardValues.indexOf(card.slice(0, -1))).sort((a: number, b: number) => a - b);
+            if (sortedValues[0] === 0 && sortedValues[1] === 1 && sortedValues[2] === 2 && sortedValues[3] === 3 && sortedValues[4] === 12) {
+              indexA = this.straightCardValues.indexOf(currentPlayer.winningCards[j].slice(0, -1));
+              indexB = this.straightCardValues.indexOf(prevPlayer.winningCards[j].slice(0, -1));
+            }
+            else {
+              indexA = this.cardValues.indexOf(currentPlayer.winningCards[j].slice(0, -1));
+              indexB = this.cardValues.indexOf(prevPlayer.winningCards[j].slice(0, -1));
+            }
+          }
+          else {
+            indexA = this.cardValues.indexOf(currentPlayer.winningCards[j].slice(0, -1));
+            indexB = this.cardValues.indexOf(prevPlayer.winningCards[j].slice(0, -1));
+          }
 
+          if (indexA < indexB) {
+            currentPlayer.actualRank = currentRank;
+            // Increment current rank only when changing conditions are met
+            currentRank++;
+            hasSameRank = false;
+            continue outerLoopBreak;
+          }
+        }
+        if (hasSameRank)
+          currentPlayer.actualRank = currentRank - 1;
+      }
       // Update previous rank and hand tag length
       prevRank = currentPlayer.rank;
       prevHandTagLength = currentPlayer.handTag.length;
@@ -126,6 +152,7 @@ export class PokerService {
         for (let i = 1; i < tiedHandCombinations.length; i++) {
           for (let j = 0; j < 5; j++) { // Assuming each array has 5 elements
             if (tiedHandCombinations[0].rank === 2 || tiedHandCombinations[0].rank === 6) {
+              //for elements where the formation is A-2-3-4-5
               const sortedValues = tiedHandCombinations[i].winningCards.map((card: string) => this.cardValues.indexOf(card.slice(0, -1))).sort((a: number, b: number) => a - b);
               if (sortedValues[0] === 0 && sortedValues[1] === 1 && sortedValues[2] === 2 && sortedValues[3] === 3 && sortedValues[4] === 12) {
                 const indexA = this.straightCardValues.indexOf(tiedHandCombinations[i].winningCards[j].slice(0, -1));
@@ -166,14 +193,6 @@ export class PokerService {
       }
     }
     bestHand = setOfBestHands[0]
-    // Special case: Check if the community cards alone form a better hand
-    // const communityResult = this.checkForHandCombination(communityCards);
-    // if (!setOfBestHands.length || communityResult.rank < setOfBestHands[0].rank) {
-    //   bestHand = setOfBestHands[0] = {
-    //     rank: communityResult.rank,
-    //     winningCards: communityResult.slice(), // Ensure a copy of winning cards
-    //   };
-    // }
 
     return bestHand;
   }
@@ -256,7 +275,7 @@ export class PokerService {
     } else {
       return {
         rank: 10,
-        winningCards: cards.slice(-5).sort((a, b) => {
+        winningCards: cards.sort((a, b) => {
           const indexA = this.cardValues.indexOf(a.slice(0, -1));
           const indexB = this.cardValues.indexOf(b.slice(0, -1));
           return indexB - indexA; // Sort in descending order based on card values before returning
@@ -343,6 +362,10 @@ export class PokerService {
             // If 'High Card' doesn't exist, push it into the array
             filteredPlayers[0].handTag.push('High Card');
           }
+        }
+        // Unmark other players as winners
+        for (let i = 1; i < filteredPlayers.length; i++) {
+          filteredPlayers[i].isWinner = false;
         }
       }
     }

@@ -9,6 +9,7 @@ h2,.hand-tag {
 
 .table-container{
   height: 25rem;
+  overflow-y: auto;
 }
 
 .player-table {
