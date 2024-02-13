@@ -1,12 +1,20 @@
 import { TestBed } from '@angular/core/testing';
+import { MatDialogRef } from '@angular/material/dialog'; // Make sure to import MatDialogRef
 
 import { HandCheckService } from './hand-check.service';
 
 describe('HandCheckService', () => {
   let service: HandCheckService;
+  const matDialogDataMock = {};
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        // Provide a mock version of MatDialogRef
+        { provide: MatDialogRef, useValue: matDialogDataMock }
+      ]
+    });
+    
     service = TestBed.inject(HandCheckService);
   });
 
@@ -36,7 +44,7 @@ describe('HandCheckService', () => {
   });
   
   it('should correctly identify a Four of a Kind with different suits', () => {
-    const cards = ['3H', '3D', '3S', '3C', '5D']; // Four of a Kind (different suits for kicker should be considered samw)
+    const cards = ['3H', '3D', '3S', '3C', '5D']; // Four of a Kind (different suits for kicker should be considered same)
     expect(service.isFourOfAKind(cards)).toBe(true);
   });
 
@@ -45,10 +53,6 @@ describe('HandCheckService', () => {
     expect(service.isFullHouse(cards)).toBe(true);
   });
   
-  // it('should correctly identify a Full House with different suits', () => {
-  //   const cards = ['3H', '3D', '3S', '5C', '5D']; // Full House (different suits)
-  //   expect(service.isFullHouse(cards)).toBe(true);
-  // });
 
   it('should correctly identify a Flush', () => {
     const cards = ['2H', '4H', '6H', '8H', '10H']; // Flush

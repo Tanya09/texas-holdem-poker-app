@@ -302,9 +302,6 @@ export class HandCheckService {
       // Add the remaining cards to the winning hand
       const remainingCards = cards.filter(card => !pairValues.includes(card.slice(0, -1)));
 
-      // Sort remaining cards by value
-      // remainingCards.sort((a, b) => this.cardValues.indexOf(b.slice(0, -1)) - this.cardValues.indexOf(a.slice(0, -1)));
-
       // Concatenate the pair cards and remaining cards
       this.winningCards = [...pairCards, ...remainingCards];
 

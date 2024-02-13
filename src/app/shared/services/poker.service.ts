@@ -70,7 +70,7 @@ export class PokerService {
  * @param rankedPlayers Array of ranked players with their calculated ranks and hand tags.
  * @returns None. Updates the actual ranks of the players in the input array that determins standings.
  */
-  private computeActualPlayerStandings(rankedPlayers: any[]): void {
+  computeActualPlayerStandings(rankedPlayers: any[]): void {
     let currentRank = 1; // Start with rank 1
     let prevRank = null;
     let prevHandTagLength = null;
@@ -125,7 +125,7 @@ export class PokerService {
  * @param communityCards Array of community cards.
  * @returns Object representing the best hand combination with its rank and winning cards.
  */
-  private getBestHandCombination(playerData: any, communityCards: string[]) {
+  getBestHandCombination(playerData: any, communityCards: string[]) {
     // Combine player's hand cards with community cards
     const allCards = [...playerData.cards, ...communityCards];
 
@@ -334,7 +334,7 @@ export class PokerService {
  * @param rank The rank of the players' hand combinations.
  * @returns Void. Updates the players array with the winner marked and adds 'High Card' tag if necessary.
  */
-  private resolveTiebreakerForRank(rank: number, players?: any[], setOfHands?: any[]): void {
+  resolveTiebreakerForRank(rank: number, players?: any[], setOfHands?: any[]): void {
     const filteredPlayers = players?.filter(player => player.rank === rank);
 
     if (filteredPlayers) {
@@ -366,6 +366,19 @@ export class PokerService {
         // Unmark other players as winners
         for (let i = 1; i < filteredPlayers.length; i++) {
           filteredPlayers[i].isWinner = false;
+        }
+        //for cases where 2 same card sets may not be compared with each other
+        if (allIndicesEqual && filteredPlayers[0].handTag.length > 0 && filteredPlayers[1].handTag.length > 0) {
+          if (filteredPlayers[0].handTag.length != filteredPlayers[1].handTag.length) {
+
+            if (filteredPlayers[0].handTag.length === 1 && filteredPlayers[1].handTag.length === 2) {
+              filteredPlayers[0].handTag.push('High Card');
+            }
+            else if (filteredPlayers[1].handTag.length === 1 && filteredPlayers[0].handTag.length === 2) {
+              filteredPlayers[1].handTag.push('High Card');
+            }
+
+          }
         }
       }
     }
